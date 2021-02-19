@@ -7,10 +7,7 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.Collections;
 
-import com.freenow.blog.models.Category;
 import com.freenow.blog.models.Pet;
-import com.freenow.blog.models.Status;
-import com.freenow.blog.models.Tag;
 import com.freenow.blog.models.*;
 import com.freenow.blog.generic.*;
 
@@ -38,6 +35,8 @@ public class PetStepDefinitions {
     String jsonPet;
     Constants constants;
     int idDeletedPet;
+    String statusUpdatedByFormData;
+    String nameUpdatedByFormData;
 
     //Add a new pet to the store
     @Given("^having a new pet defined with id (.*) name (.*) and status (.*)$")
@@ -60,19 +59,19 @@ public class PetStepDefinitions {
 
     @Then("expecting the pet to be added in the petstore")
     public void expectThePetToBeAddedInThePetstore() {
-        petSteps.the_pet_should_be_available(generatedPet);
+        petSteps.thePetShouldBeAvailable(generatedPet);
     }
 
     //Find a pet which not exist
     @When("looking for a pet an id (.*) that does not exist results in a status 404 and message Pet not found$")
     public void lookingForANonExistingPet(int id){
-        petSteps.the_pet_is_not_available(id);
+        petSteps.thePetIsNotAvailable(id);
     }
 
     //Finds pets by status
     @When("^looking for the pet with status (.*) and name (.*) i expect it to be in de results$")
     public void lookingForPetWithStatus(String status, String name){
-        petSteps.the_pet_should_be_available_by_status(status, name);
+        petSteps.thePetShouldBeAvailableByStatus(status, name);
     }
 
     //Update an existing pet
@@ -95,13 +94,20 @@ public class PetStepDefinitions {
 
     @Then("has the pet an updated profile")
     public void petHasUpdatedProfile(){
-        petSteps.the_pet_should_be_available(generatedPetUpdating);
+        petSteps.thePetShouldBeAvailable(generatedPetUpdating);
     }
 
     //Updates a pet in the store with form data
     @Given("^a pet with id (.*) that needs to be updated by form data with name (.*) and status (.*)$")
     public void updatesPetByFormData(int id, String name, String status){
-        petSteps.update_a_pet_by_form_data(id, name, status);
+        nameUpdatedByFormData = name;
+        statusUpdatedByFormData = status;
+        petSteps.updateAPetByFormData(id, nameUpdatedByFormData, statusUpdatedByFormData);
+    }
+
+    @Then("the pet should be updated")
+    public void petShouldBeUpdatedByFormData(){
+        petSteps.thePetShouldBeAvailableByStatus(statusUpdatedByFormData, nameUpdatedByFormData);
     }
 
 
@@ -109,12 +115,12 @@ public class PetStepDefinitions {
     @When("^deleting the pet with id (.*)$")
     public void deletingAPet(int id){
         idDeletedPet = id;
-        petSteps.delete_the_pet(idDeletedPet);
+        petSteps.deleteThePet(idDeletedPet);
     }
 
     @Then("^the pet does not longer exist in the store$")
     public void petDoesNotLongerExist(){
-        petSteps.the_pet_is_not_available(idDeletedPet);
+        petSteps.thePetIsNotAvailable(idDeletedPet);
     }
 }
 

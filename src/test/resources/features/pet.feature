@@ -37,6 +37,7 @@ Scenario Outline: Update an existing pet
 # #POST/pet/{petId}
 Scenario Outline: Updates a pet with in the store with form data
     Given a pet with id <id> that needs to be updated by form data with name <name> and status <status>
+    Then the pet should be updated
     Examples:
     | id  | name       | status |
     | 200 | DogChanged | sold   |
