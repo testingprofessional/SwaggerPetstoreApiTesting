@@ -4,7 +4,7 @@ demo_job_1:
      script:
        - echo Hello Leaseplan
        - mvn clean verify
-       - New-Item reports/report.html -type file
+       - $null > reports/report.html
        - mkdir reports
        - echo "<html><h1>Some report</h1></html>" > "reports/report.html"
      artifacts:
