@@ -17,3 +17,4 @@ send_email:
       -F to=$GITLAB_USER_EMAIL
       -F subject='Test results'
       -F text='Test repo LeasePlanBE geslaagd!!! (zie bijlage report)'
+      -F attachement='@reports/report.html'
