@@ -4,7 +4,6 @@ demo_job_1:
      script:
        - echo Hello Leaseplan
        - mvn clean verify
-       - $null > reports/report.html
        - mkdir reports
        - echo "<html><h1>Some report</h1></html>" > "reports/report.html"
      artifacts:
@@ -18,4 +17,3 @@ send_email:
       -F to=$GITLAB_USER_EMAIL
       -F subject='Test results'
       -F text='Test repo LeasePlanBE geslaagd!!! (zie bijlage report)'
-      -F attachement='@reports/report.html'
