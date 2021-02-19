@@ -12,6 +12,8 @@ import com.freenow.blog.models.Category;
 import com.freenow.blog.models.Pet;
 import com.freenow.blog.models.Status;
 import com.freenow.blog.models.Tag;
+import com.freenow.blog.models.*;
+import com.freenow.blog.generic.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.BeforeClass;
@@ -19,6 +21,7 @@ import org.junit.BeforeClass;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import net.thucydides.core.annotations.Steps;
 
 import static net.serenitybdd.rest.SerenityRest.rest;
 
@@ -26,58 +29,36 @@ import static io.restassured.RestAssured.given;
 
 public class PetStepDefinitions {
 
-    private static final String PHOTO_URL = "https://www.tesco.ie/groceries/MarketingContent/Sites/Retail/superstore/Online/P/i/departments/2016/Pets/1BC.jpg";
-    PetController petController;
-    Pet pet = new Pet.Builder()
-            //.withId(RandomStringUtils.randomNumeric(10))
-            .withId("15")
-            .withName("doggiex")
-            .withPhotoUrls(Collections.singletonList("string"))
-            .withStatus(Status.available)
-            .withTags(Collections.singletonList(new Tag(0, "string")))
-            .inCategory(new Category(0, "string")).build();
+    @Steps
+    PetSteps petSteps;
 
-    @BeforeClass
-    public void beforeClass() {
-        petController = new PetController();
-    }
-    
+    Pet generatedPet;
+    int idJson;
+    String jsonPet;
+    Constants constants;
+
     //Add a new pet to the store
-    @Given("^having a new pet defined with id (.*) categoryid (.*) categoryname (.*) name (.*) tagid (.*) tagname (.*) and status (.*)$")
-    public void havingANewPetDefined(int id, int categoryId, String categoryName, String name, int tagId, String tagName, String status) {
+    @Given("^having a new pet defined with id (.*) name (.*) and status (.*)$")
+    public void havingANewPetDefined(int id, String name, String status) {
 
-        given().
-            param("username","test").
-            param("password","test").
-        when().
-            get("http://petstore.swagger.io/v2/user/login").
-        then().
-            assertThat().
-            statusCode(200);
+        generatedPet = new Pet(status, name);
+        idJson = id;
+        jsonPet = "{\"id\": " + idJson + " , \"name\": \""
+                + generatedPet.getName() + "\", \"photoUrls\": [], \"status\": \""
+                + generatedPet.getStatus() + "\"}";
 
-
-            rest().get("http://petstore.swagger.io/v2/pet/15")
-            .then().statusCode(200)
-            .and().body("name", equalTo(pet.getName()));
-
-        // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!! pet: " + pet);
-        // Pet petResponse = petController.findPet(pet);
-        // assertThat(petResponse, is(samePropertyValuesAs(pet)));
-
-        // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!! pet: " + pet);
-        // Pet petResponse = petController.addNewPet(pet);
-        // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!! petResponse: " + petResponse);
-        // assertThat(petResponse, is(samePropertyValuesAs(pet)));
+        this.generatedPet.setId(idJson);
     }
 
     @When("adding the pet to the petstore")
     public void addingPetToPetstore() {
-        //TODO
+         rest().given().contentType("application/json")
+                 .body(jsonPet).post(Constants.PET_ENDPOINT);
     }
 
     @Then("expecting the pet to be added in the petstore")
     public void expectThePetToBeAddedInThePetstore() {
-        //TODO
+        petSteps.the_pets_should_be_available(generatedPet);
     }
 
     // //Uploads an image

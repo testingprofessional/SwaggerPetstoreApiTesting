@@ -2,14 +2,14 @@ Feature: Pet store actions
 
 #POST/pet
 Scenario Outline: Add a new pet to the store
-    Given having a new pet defined with id <id> categoryid <categoryid> categoryname <categoryname> name <name> tagid <tagid> tagname <tagname> and status <status>
+    Given having a new pet defined with id <id> name <name> and status <status>
     When adding the pet to the petstore
     Then expecting the pet to be added in the petstore
     Examples:
-    | id | categoryid | categoryname | name  | tagid | tagname | status   |
-    | 1  | 1 	      | categoryVido | Vido  | 1     | Vidotag | available|
-    | 2  | 2 	      | categoryVida | Vida  | 2     | Vidatag | pending  |
-    | 3  | 3 	      | categoryVide | Vide  | 2     | Videtag | sold     |
+    | id | name  | status   |
+    | 1  | Vido  | available|
+    | 2  | Vida  | pending  |
+    | 3  | Vide  | sold     |
 
 # #POST/pet/{petId}/uploadImage
 # Scenario Outline: Uploads an image
