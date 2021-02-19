@@ -5,7 +5,6 @@ demo_job_1:
        - echo Hello Leaseplan
        - mvn clean verify
        - mkdir reports
-       - touch reports/report.html
        - echo "<html><h1>Some report</h1></html>" > "reports/report.html"
      artifacts:
        paths:
