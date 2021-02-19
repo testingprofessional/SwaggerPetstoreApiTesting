@@ -20,6 +20,7 @@ import org.junit.BeforeClass;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.restassured.http.ContentType;
 import net.thucydides.core.annotations.Steps;
 
 import static net.serenitybdd.rest.SerenityRest.rest;
@@ -62,22 +63,6 @@ public class PetStepDefinitions {
         petSteps.the_pet_should_be_available(generatedPet);
     }
 
-    // //Uploads an image
-    // @Given("^having an image (.*) that i want to upload to the pet with id (.*)$")
-    // public void haveAnImage(String image, int id) {
-    //     //TODO
-    // }
-
-    // @When ("the image is uploaded")
-    // public void imageUploaded(){
-    //     //TODO
-    // }
-
-    // @Then ("the pet has an image in its profile")
-    // public void checkUploadedImageInProfile(){
-    //     //TODO
-    // }
-
     //Find a pet which not exist
     @When("looking for a pet an id (.*) that does not exist results in a status 404 and message Pet not found$")
     public void lookingForANonExistingPet(int id){
@@ -112,6 +97,13 @@ public class PetStepDefinitions {
     public void petHasUpdatedProfile(){
         petSteps.the_pet_should_be_available(generatedPetUpdating);
     }
+
+    //Updates a pet in the store with form data
+    @Given("^a pet with id (.*) that needs to be updated by form data with name (.*) and status (.*)$")
+    public void updatesPetByFormData(int id, String name, String status){
+        petSteps.update_a_pet_by_form_data(id, name, status);
+    }
+
 
     //Deletes a pet
     @When("^deleting the pet with id (.*)$")

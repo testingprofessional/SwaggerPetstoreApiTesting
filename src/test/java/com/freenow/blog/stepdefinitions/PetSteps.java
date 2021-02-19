@@ -7,6 +7,9 @@ import com.freenow.blog.models.Tag;
 
 import org.hamcrest.Matchers;
 
+import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.given;
+
 import com.freenow.blog.generic.*;
 
 import net.thucydides.core.annotations.Step;
@@ -41,6 +44,16 @@ public class PetSteps {
     @Step
     public void delete_the_pet(int idDeletedPet) {
         rest().delete(Constants.PET_ENDPOINT + "/{id}", idDeletedPet)
+            .then().statusCode(200);
+    }
+
+    @Step
+    public void update_a_pet_by_form_data(int idUpdatePet, String name, String status) {
+        given().urlEncodingEnabled(true)
+            .param("name", name)
+            .param("status", status)
+            .header("Accept", ContentType.JSON.getAcceptHeader())
+            .post(Constants.PET_ENDPOINT + "/" + idUpdatePet)
             .then().statusCode(200);
     }
 }

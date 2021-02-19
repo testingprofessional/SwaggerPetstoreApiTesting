@@ -12,15 +12,6 @@ Scenario Outline: Add a new pet to the store
     | 200  | Vida  | pending  |
     | 300  | Vide  | sold     |
 
-# #POST/pet/{petId}/uploadImage
-# Scenario Outline: Uploads an image
-#     Given having an image <image> that i want to upload to the pet with id <id>
-#     When the image is uploaded
-#     Then the pet has an image in its profile
-#     Examples:
-#     | id | image |
-#     | 1  | URL   | 
-
 #GET/pet/{petId}
 Scenario: Find a pet which not exist
     When looking for a pet an id 600001 that does not exist results in a status 404 and message Pet not found
@@ -44,7 +35,11 @@ Scenario Outline: Update an existing pet
     | 100  | Vidi | sold   |
 
 # #POST/pet/{petId}
-# Scenario: Updates a pet in the store with form data
+Scenario Outline: Updates a pet with in the store with form data
+    Given a pet with id <id> that needs to be updated by form data with name <name> and status <status>
+    Examples:
+    | id  | name       | status |
+    | 200 | DogChanged | sold   |
 
 
 #DELETE/pet/{petId}
