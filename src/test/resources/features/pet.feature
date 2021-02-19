@@ -1,15 +1,16 @@
 Feature: Pet store actions
 
 #POST/pet
+#GET/pet/{petId}
 Scenario Outline: Add a new pet to the store
     Given having a new pet defined with id <id> name <name> and status <status>
     When adding the pet to the petstore
     Then expecting the pet to be added in the petstore
     Examples:
-    | id | name  | status   |
-    | 1  | Vido  | available|
-    | 2  | Vida  | pending  |
-    | 3  | Vide  | sold     |
+    | id   | name  | status   |
+    | 100  | Vido  | available|
+    | 200  | Vida  | pending  |
+    | 300  | Vide  | sold     |
 
 # #POST/pet/{petId}/uploadImage
 # Scenario Outline: Uploads an image
@@ -20,47 +21,38 @@ Scenario Outline: Add a new pet to the store
 #     | id | image |
 #     | 1  | URL   | 
 
-# #GET/pet/{petId}
-# Scenario:Find pet by id
-#     When looking for the pet with id 1
-#     Then getting the right information about the pet
+#GET/pet/{petId}
+Scenario: Find a pet which not exist
+    When looking for a pet an id 600001 that does not exist results in a status 404 and message Pet not found
 
-# #GET/pet/findByStatus
-# Scenario Outline: Finds pets by status
-#     When looking for the pet with status <status>
-#     Then getting the right information about the pet
-#     Examples:
-#     | status    |
-#     | available |
-#     | pending   |
-#     | sold      |
+#GET/pet/findByStatus
+Scenario Outline: Finds pets by status
+    When looking for the pet with status <status> and name <name> i expect it to be in de results
+    Examples:
+    | status    | name |
+    | available | Vido |
+    | pending   | Vida |
+    | sold      | Vide |
 
-# #PUT/pet
-# Scenario Outline: Update an existing pet
-#     Given a pet with id <id>
-#     When updating the name of the pet to name <name> and status <status>
-#     Then has the pet an updated profile
-#     Examples:
-#     | id  | name | status |
-#     | 15  | Vidi | sold   |
-
-# #PUT/pet
-# Scenario: Update an existing pet with a not existing id
-#     Given having a pet with a non existing id 100
-#     When updating the name of the pet to name VidaNonExistingId and status StatusNonExisting
-#     Then expecting a error message
+#PUT/pet
+Scenario Outline: Update an existing pet
+    Given an updated pet with id <id> to name <name> and status <status>
+    When updating the pet
+    Then has the pet an updated profile
+    Examples:
+    | id   | name | status |
+    | 100  | Vidi | sold   |
 
 # #POST/pet/{petId}
 # Scenario: Updates a pet in the store with form data
 
 
-# #DELETE/pet/{petId}
-# Scenario Outline: Deletes a pet
-#     Given having some pets in the store and i want to delete them
-#     When deleting the pet with id <id>
-#     Then the pet does not longer exist in the store
-#     Examples:
-#     | id |
-#     | 1  |
-#     | 2  |
-#     | 3  |
+#DELETE/pet/{petId}
+Scenario Outline: Deletes a pet
+    When deleting the pet with id <id>
+    Then the pet does not longer exist in the store
+    Examples:
+    | id   |
+    | 100  |
+    | 200  |
+    | 300  |

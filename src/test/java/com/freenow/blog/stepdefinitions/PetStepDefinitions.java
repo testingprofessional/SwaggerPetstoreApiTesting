@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.Collections;
 
-import com.freenow.blog.controller.PetController;
 import com.freenow.blog.models.Category;
 import com.freenow.blog.models.Pet;
 import com.freenow.blog.models.Status;
@@ -33,9 +32,11 @@ public class PetStepDefinitions {
     PetSteps petSteps;
 
     Pet generatedPet;
+    Pet generatedPetUpdating;
     int idJson;
     String jsonPet;
     Constants constants;
+    int idDeletedPet;
 
     //Add a new pet to the store
     @Given("^having a new pet defined with id (.*) name (.*) and status (.*)$")
@@ -58,7 +59,7 @@ public class PetStepDefinitions {
 
     @Then("expecting the pet to be added in the petstore")
     public void expectThePetToBeAddedInThePetstore() {
-        petSteps.the_pets_should_be_available(generatedPet);
+        petSteps.the_pet_should_be_available(generatedPet);
     }
 
     // //Uploads an image
@@ -76,5 +77,52 @@ public class PetStepDefinitions {
     // public void checkUploadedImageInProfile(){
     //     //TODO
     // }
+
+    //Find a pet which not exist
+    @When("looking for a pet an id (.*) that does not exist results in a status 404 and message Pet not found$")
+    public void lookingForANonExistingPet(int id){
+        petSteps.the_pet_is_not_available(id);
+    }
+
+    //Finds pets by status
+    @When("^looking for the pet with status (.*) and name (.*) i expect it to be in de results$")
+    public void lookingForPetWithStatus(String status, String name){
+        petSteps.the_pet_should_be_available_by_status(status, name);
+    }
+
+    //Update an existing pet
+    @Given("^an updated pet with id (.*) to name (.*) and status (.*)$")
+    public void givenAnUpdatedPet(int id, String name, String status){
+        generatedPetUpdating = new Pet(status, name);
+        idJson = id;
+        jsonPet = "{\"id\": " + idJson + " , \"name\": \""
+                + generatedPetUpdating.getName() + "\", \"photoUrls\": [], \"status\": \""
+                + generatedPetUpdating.getStatus() + "\"}";
+
+        this.generatedPetUpdating.setId(idJson);
+    }
+
+    @When("updating the pet")
+    public void updatingTheNameAndStatusOfThePet(){
+        rest().given().contentType("application/json")
+                 .body(jsonPet).put(Constants.PET_ENDPOINT);
+    }
+
+    @Then("has the pet an updated profile")
+    public void petHasUpdatedProfile(){
+        petSteps.the_pet_should_be_available(generatedPetUpdating);
+    }
+
+    //Deletes a pet
+    @When("^deleting the pet with id (.*)$")
+    public void deletingAPet(int id){
+        idDeletedPet = id;
+        petSteps.delete_the_pet(idDeletedPet);
+    }
+
+    @Then("^the pet does not longer exist in the store$")
+    public void petDoesNotLongerExist(){
+        petSteps.the_pet_is_not_available(idDeletedPet);
+    }
 }
 
