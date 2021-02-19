@@ -3,3 +3,4 @@ demo_job_1:
        - ci
      script:
        - echo Hello Leaseplan
+       - mvn clean verify
