@@ -28,7 +28,7 @@ Run `mvn clean verify` from the command line.
 
 The test results will be recorded in folder: `target/site/serenity/index.html`.
 
-#### Write new tests
+### Write new tests
 
 - Make a new .feature file in the folder: resources/features
   Define the test cases in the Given, When, Then format
@@ -38,6 +38,16 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
     (Given) some context
     (When) some action is carried out
     (Then) a particular set of observable consequences should obtain
+  ```
+  Using tables in the feature file is a nice solution to store date used for the tests
+  It is also easy to make new test cases simply by adding a new row
+
+  ```Gherkin 
+  Scenario Outline: Add a new pet to the store
+    Given having a new pet defined with id <id> name <name> and status <status>
+    Examples:
+    | id   | name  | status   |
+    | 100  | Vido  | available|
   ```
 
 - Make a new .java file in the folder: stepdefinitions
@@ -54,7 +64,9 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
   The (.*) is used as a placeholder for the variables coming from the feature file
   Make sure to give the exact amount of variables as arguments in the function
 
-##### Endpoint overview 
+  More info about making testcases with cucumber: https://cucumber.io/
+
+### Endpoint overview 
 
 Swagger overview of endpoints: https://petstore.swagger.io/
 
@@ -65,5 +77,37 @@ Test automation made:
 
 Test atuomation not made:
 - Operations about user: https://petstore.swagger.io/v2/user
+
+For a more detailed overview please visit the swagger overview or take a look at the Cucumber feature files in this project
+
+### CI Pipeline GitLab
+
+All tests will be running automaticly when pushing the changed functionality to GitLab (repo)
+How did I do this:
+
+1) Made a GitLab account and started a new project https://gitlab.com/vndale/leaseplanopdrachtbe.git
+2) Made a SSH key and put it in the Gitlab Project settings https://docs.gitlab.com/ee/ssh/
+3) Installed a Gitlab Runner to run jobs in the pipeline: 
+      Info about Gitlab runners: https://docs.gitlab.com/runner/
+      Install Gitlab Runner: https://docs.gitlab.com/runner/install/index.html
+4) Wrote a (simple) yml file for the CI configuration and put it in the root of my repo
+      Info about YML files: https://docs.gitlab.com/ee/ci/yaml/
+Example yml file:
+```Gherkin
+demo_job_1:
+     tags:
+       - ci
+     script:
+       - echo Hello Leaseplan
+       - mvn clean verify
+```
+5) To bring changes to the Gitlab repo:
+      Command line:
+      git status (to check if there are changes and which branch you are working)
+      git add .
+      git commit -m "commit message"
+      git push -u origin master (when this is not working try: git push -u <url-to-gitlab-repo> master)
+
+      Now in the section 'CI / CD > Pipelines' of your project in Gitlab the build en tests are running
 
 ```
