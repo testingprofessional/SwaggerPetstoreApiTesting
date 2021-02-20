@@ -1,21 +1,35 @@
 package com.freenow.blog.stepdefinitions;
 
 import com.freenow.blog.models.Pet;
-
-import org.hamcrest.Matchers;
-
-import io.restassured.http.ContentType;
-import static io.restassured.RestAssured.given;
-
 import com.freenow.blog.generic.*;
 
+import org.hamcrest.Matchers;
+import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.given;
 import net.thucydides.core.annotations.Step;
 import static org.hamcrest.Matchers.*;
 import static net.serenitybdd.rest.SerenityRest.rest;
 
 public class PetSteps {
 
-    Constants constants;
+    @Step
+    public String generateJsonPet(String name, String status, int id) {
+        return "{\"id\": " + id + " , \"name\": \""
+                + name + "\", \"photoUrls\": [], \"status\": \""
+                + status + "\"}";
+    }
+
+    @Step
+    public void addPetToPetStore(String jsonPet) {
+        rest().given().contentType("application/json")
+            .body(jsonPet).post(Constants.PET_ENDPOINT);
+    }
+
+    @Step
+    public void updateThePetInThePetStore(String jsonPet) {
+        rest().given().contentType("application/json")
+            .body(jsonPet).put(Constants.PET_ENDPOINT);
+    }
 
     @Step
     public void thePetShouldBeAvailable(Pet generatedPet) {

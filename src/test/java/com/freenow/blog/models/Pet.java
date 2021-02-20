@@ -5,9 +5,10 @@ public class Pet {
     private String status;
     private int id;
 
-    public Pet(String status, String name) {
+    public Pet(String status, String name, int id) {
         this.status = status;
         this.name = name;
+        this.id = id;
     }
 
     public String getStatus() {

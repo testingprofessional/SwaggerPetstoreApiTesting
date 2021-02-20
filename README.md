@@ -22,17 +22,13 @@ Tests are written using a combination of SerenityBDD, RestAssured, Cucumber, Jun
 src
   + test
     + java                          Test runners and supporting code
-      + posts                       Domain model package consisting of all actions/questions on blog posts functionality
-          BlogPostActions           API calls/User actions on blog post APIs
-          BlogPostQuestions         User questions/validations on blog post API response
-      + commontasks                 Package for all common actions and questions
-          CommonQuestions           All common questions/validations across all the domain models
-          CommonRequestSpec         Common Request Spec for the API calls
+      + generic                     Generic code like constants
+      + models                      Models (Like pet model)
       + stepdefinitions             Step definitions for the BDD feature
-      + commonutilies               Common utility methods
     + resources
       + features                    Feature files directory
-          post_comments.feature     Feature containing BDD scenarios
+          pet.feature               Feature containing BDD scenarios
+          order.feature             Feature containing BDD scenarios
       + schema                      Folder containing json schema for API schema validation
       Serenity.conf                 Configurations file
 
@@ -55,24 +51,4 @@ Each step in tests are very clearly documented for readability and debugging in 
 
 ![Sample Report Steps](https://user-images.githubusercontent.com/22020329/67158871-63982680-f35b-11e9-82ae-b5e6422167d3.png)
 
-
-### Additional configurations
-
-Additional command line parameters can be passed for switching the application environment.
-```json
-$ mvn clean verify -Denvironment=dev
-```
-Configurations to for different environments are set in the `test/resources/serenity.conf` file. In real time projects each environment can be configured with its baseurl to run the tests based on different environments.
-```
-environments {
-  default {
-    baseurl = "https://jsonplaceholder.typicode.com"
-  }
-  dev {
-    baseurl = "https://jsonplaceholder.typicode.com"
-  }
-  staging {
-    baseurl = "https://jsonplaceholder.typicode.com"
-  }
-}
 ```

@@ -1,28 +1,11 @@
 package com.freenow.blog.stepdefinitions;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
-import static org.hamcrest.Matchers.*;
-
-import java.util.Collections;
-
 import com.freenow.blog.models.Pet;
-import com.freenow.blog.models.*;
-import com.freenow.blog.generic.*;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.BeforeClass;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.restassured.http.ContentType;
 import net.thucydides.core.annotations.Steps;
-
-import static net.serenitybdd.rest.SerenityRest.rest;
-
-import static io.restassured.RestAssured.given;
 
 public class PetStepDefinitions {
 
@@ -33,7 +16,7 @@ public class PetStepDefinitions {
     Pet generatedPetUpdating;
     int idJson;
     String jsonPet;
-    Constants constants;
+    String jsonPetUpdating;
     int idDeletedPet;
     String statusUpdatedByFormData;
     String nameUpdatedByFormData;
@@ -41,20 +24,13 @@ public class PetStepDefinitions {
     //Add a new pet to the store
     @Given("^having a new pet defined with id (.*) name (.*) and status (.*)$")
     public void havingANewPetDefined(int id, String name, String status) {
-
-        generatedPet = new Pet(status, name);
-        idJson = id;
-        jsonPet = "{\"id\": " + idJson + " , \"name\": \""
-                + generatedPet.getName() + "\", \"photoUrls\": [], \"status\": \""
-                + generatedPet.getStatus() + "\"}";
-
-        this.generatedPet.setId(idJson);
+        generatedPet = new Pet(status, name, id);
+        jsonPet = petSteps.generateJsonPet(generatedPet.getName(), generatedPet.getStatus(), generatedPet.getId()); 
     }
 
     @When("adding the pet to the petstore")
     public void addingPetToPetstore() {
-         rest().given().contentType("application/json")
-                 .body(jsonPet).post(Constants.PET_ENDPOINT);
+        petSteps.addPetToPetStore(jsonPet);
     }
 
     @Then("expecting the pet to be added in the petstore")
@@ -77,19 +53,13 @@ public class PetStepDefinitions {
     //Update an existing pet
     @Given("^an updated pet with id (.*) to name (.*) and status (.*)$")
     public void givenAnUpdatedPet(int id, String name, String status){
-        generatedPetUpdating = new Pet(status, name);
-        idJson = id;
-        jsonPet = "{\"id\": " + idJson + " , \"name\": \""
-                + generatedPetUpdating.getName() + "\", \"photoUrls\": [], \"status\": \""
-                + generatedPetUpdating.getStatus() + "\"}";
-
-        this.generatedPetUpdating.setId(idJson);
+        generatedPetUpdating = new Pet(status, name, id);
+        jsonPetUpdating = petSteps.generateJsonPet(generatedPetUpdating.getName(), generatedPetUpdating.getStatus(), generatedPetUpdating.getId());
     }
 
     @When("updating the pet")
     public void updatingTheNameAndStatusOfThePet(){
-        rest().given().contentType("application/json")
-                 .body(jsonPet).put(Constants.PET_ENDPOINT);
+        petSteps.updateThePetInThePetStore(jsonPetUpdating);
     }
 
     @Then("has the pet an updated profile")
@@ -109,7 +79,6 @@ public class PetStepDefinitions {
     public void petShouldBeUpdatedByFormData(){
         petSteps.thePetShouldBeAvailableByStatus(statusUpdatedByFormData, nameUpdatedByFormData);
     }
-
 
     //Deletes a pet
     @When("^deleting the pet with id (.*)$")
