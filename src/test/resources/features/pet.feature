@@ -1,4 +1,4 @@
-Feature: Pet store actions
+Feature: Everything about your Pets
 
 #POST/pet
 #GET/pet/{petId}

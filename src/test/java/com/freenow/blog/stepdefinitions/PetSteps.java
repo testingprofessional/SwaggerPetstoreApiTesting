@@ -1,7 +1,7 @@
 package com.freenow.blog.stepdefinitions;
 
 import com.freenow.blog.models.Pet;
-import com.freenow.blog.generic.*;
+import com.freenow.blog.generic.Constants;
 
 import org.hamcrest.Matchers;
 import io.restassured.http.ContentType;
