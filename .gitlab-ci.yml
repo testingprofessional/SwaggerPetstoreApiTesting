@@ -15,5 +15,6 @@ send_email:
        "https://api.mailgun.net/v3/$MAILGUN_DOMAIN/messages"
       -F from='Gitlab <gitlab@example.com>'
       -F to=$GITLAB_USER_EMAIL
-      -F subject='Test results'
+      -F subject='Test resultaten LeasePlanBE Swagger Petstore opdracht'
       -F text='Test repo LeasePlanBE geslaagd!!! (zie bijlage report)'
+      -F text='Dit bericht wordt (b)(v)erzorgt door Mailgun'
