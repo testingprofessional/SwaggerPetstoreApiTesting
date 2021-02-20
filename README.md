@@ -39,7 +39,7 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
     (When) some action is carried out
     (Then) a particular set of observable consequences should obtain
   ```
-  Using tables in the feature file is a nice solution to store date used for the tests
+  Using tables in the feature file is a nice solution to store data used for the tests.
   It is also easy to make new test cases simply by adding a new row
 
   ```Gherkin 
@@ -50,7 +50,7 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
     | 100  | Vido  | available|
   ```
 
-- Make a new .java file in the folder: stepdefinitions
+- Make a new .java file in the folder: stepdefinitions.
   Define the test scenario steps from the feature file to 'glue' them with the actual code
 
   ```Gherkin
@@ -60,8 +60,8 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
     }
   ```
 
-  When using tables in the feature file, make sure using the ^ and $ in the @Given @When and @Then definitions
-  The (.*) is used as a placeholder for the variables coming from the feature file
+  When using tables in the feature file, make sure using the ^ and $ in the @Given @When and @Then definitions.
+  The (.*) is used as a placeholder for the variables coming from the feature file.
   Make sure to give the exact amount of variables as arguments in the function
 
   More info about making testcases with cucumber: https://cucumber.io/
@@ -75,22 +75,22 @@ Test automation made:
 - Everything about pets: https://petstore.swagger.io/v2/pet
 - Access to Petstore orders: https://petstore.swagger.io/v2/store
 
-Test atuomation not made:
+Test automation not made:
 - Operations about user: https://petstore.swagger.io/v2/user
 
 For a more detailed overview please visit the swagger overview or take a look at the Cucumber feature files in this project
 
 ### CI Pipeline GitLab
 
-All tests will be running automaticly when pushing the changed functionality to GitLab (repo)
-How did I do this:
+All tests will be running automaticly when pushing the changed functionality to GitLab (repo).
+How to do this:
 
-1) Made a GitLab account and started a new project https://gitlab.com/vndale/leaseplanopdrachtbe.git
-2) Made a SSH key and put it in the Gitlab Project settings https://docs.gitlab.com/ee/ssh/
-3) Installed a Gitlab Runner to run jobs in the pipeline: 
+1) Make a GitLab account and started a new project https://gitlab.com/vndale/leaseplanopdrachtbe.git
+2) Make a SSH key and put it in the Gitlab Project settings https://docs.gitlab.com/ee/ssh/
+3) Install a Gitlab Runner to run jobs in the pipeline: 
       Info about Gitlab runners: https://docs.gitlab.com/runner/
       Install Gitlab Runner: https://docs.gitlab.com/runner/install/index.html
-4) Wrote a (simple) yml file for the CI configuration and put it in the root of my repo
+4) Write a (simple) yml file for the CI configuration and put it in the root of the repo.
       Info about YML files: https://docs.gitlab.com/ee/ci/yaml/
 Example yml file:
 ```Gherkin
@@ -102,6 +102,7 @@ demo_job_1:
        - mvn clean verify
 ```
 5) To bring changes to the Gitlab repo:
+```Gherkin
       Command line:
       git status (to check if there are changes and which branch you are working)
       git add .
@@ -109,5 +110,6 @@ demo_job_1:
       git push -u origin master (when this is not working try: git push -u <url-to-gitlab-repo> master)
 
       Now in the section 'CI / CD > Pipelines' of your project in Gitlab the build en tests are running
+```
 
 ```
