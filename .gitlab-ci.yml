@@ -8,7 +8,7 @@ demo_job_1:
        - echo "<html><h1>Some report</h1></html>" > "reports/report.html"
      artifacts:
        paths:
-         - reports/
+         - target/site/serenity/
          
 send_email:
     script: curl -s --user "api:$MAILGUN_API_KEY"
@@ -17,3 +17,4 @@ send_email:
       -F to=$GITLAB_USER_EMAIL
       -F subject='Test results'
       -F text='Test repo LeasePlanBE geslaagd!!! (zie bijlage report)'
+      -F attachement='@target/site/serenity/index.html'
