@@ -10,6 +10,9 @@ public class StoreStepDefinitions {
     @Steps
     StoreSteps storeSteps;
 
+    @Steps
+    PetSteps petSteps;
+
     String jsonOrder;
     int orderIdStore;
     int purchaseId;
@@ -51,8 +54,21 @@ public class StoreStepDefinitions {
     }
 
     //Returns pet inventories by status
+    @Given("3 pets in the petstore with status available pending and sold")
+    public void makeThreePetsInThePetstore() {
+        String jsonPetAvailable = petSteps.generateJsonPet("dogInventoryAvailable", "available", 4001);
+        String jsonPetPending = petSteps.generateJsonPet("dogInventoryPending", "pending", 5001);
+        String jsonPetSold = petSteps.generateJsonPet("dogInventorySold", "sold", 6001);
+        petSteps.addPetToPetStore(jsonPetAvailable);
+        petSteps.addPetToPetStore(jsonPetPending);
+        petSteps.addPetToPetStore(jsonPetSold);
+    }
+
     @When("asking the inventory of the petstore i expect a map with quantities")
     public void getPetInventoriesByStatus() {
         storeSteps.theInventoryShouldBeAvailable();
+        petSteps.deleteThePet(4001);
+        petSteps.deleteThePet(5001);
+        petSteps.deleteThePet(6001);
     } 
 }

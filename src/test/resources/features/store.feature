@@ -18,6 +18,8 @@ Scenario: Delete purchase order by not existing ID
 
 #GET/store/inventory
 Scenario: Returns pet inventories by status
-    When asking the inventory of the petstore i expect a map with quantities 
+    Given 3 pets in the petstore with status available pending and sold
+    When asking the inventory of the petstore i expect a map with quantities
+     
 
 

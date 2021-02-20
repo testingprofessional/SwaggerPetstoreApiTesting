@@ -36,8 +36,6 @@ public class StoreSteps {
         rest().get(Constants.STORE_ENDPOINT + "/inventory")
             .then().statusCode(200)
             .and().body("$", hasKey("sold"))
-                  .body("$", hasKey("ccStatus"))
-                  .body("$", hasKey("string"))
                   .body("$", hasKey("pending"))
                   .body("$", hasKey("available"));
     }
