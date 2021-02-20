@@ -1,20 +1,10 @@
-# Java-Serenity-RestAssured-Cucumber-JUnit-Maven Sample API Automation Solution
-[![CircleCI](https://circleci.com/gh/amalsgit/restassured-serenitybdd-junit-cucumber/tree/master.svg?style=svg)](https://circleci.com/gh/amalsgit/restassured-serenitybdd-junit-cucumber/tree/master)
+# Swagger petstore API Automation Solution
 
 ## Introduction
 
-This is a sample Rest API test solution for sample endpoints available in https://jsonplaceholder.typicode.com/. The published APIs represent a blog application where users can publish post and comment on them.
+This is a Rest API test solution for endpoints available in https://petstore.swagger.io/. The published APIs represent a sample server petstore application.
 
 Tests are written using a combination of SerenityBDD, RestAssured, Cucumber, Junit & Maven.
-
-## Framework & Design Considerations
-- Serenity BDD is a library that makes it easier to write high quality automated acceptance tests, with powerful reporting and living documentation features. It has strong support for both web testing with Selenium, and API testing using RestAssured.
-- API calls & validations are made using RestAssured and SerenityRest which is a wrapper on top of RestAssured. 
-- Tests are written in BDD Gherkin format in Cucumber feature files and it is represented as a living documentation in the test report. 
-- This solution is designed in an Action-Question pattern with the code base categorized into domain model packages based on user actions and questions to understand/validate results. 
-- Each domain package consist of an Action class where API actions are defined and another Question class where user questions/assertions are written.
-- These domain models are called from a step-definitions class which are in-turn called from BDD tests.
-- A test scenario to validate API response schema has been included for each endpoint in the respective feature file. The API spec for schema comparison is placed inside "schema" folder in test resources. The specs are generated from https://www.liquid-technologies.com/online-json-to-schema-converter.
 
 ### The project directory structure
 
@@ -33,22 +23,34 @@ src
       Serenity.conf                 Configurations file
 
 ```
-## Executing the tests
+### Install and executing the tests
+
 Run `mvn clean verify` from the command line.
 
 The test results will be recorded here `target/site/serenity/index.html`.
-Please run the below command from root directory to open the result after execution.
-```bash
-open target/site/serenity/index.html 
-```
-Reports can be seen in circleci, under the artifacts section `serenity/index.html`.
-Here is the direct link to one of the build artifact: https://18-215099279-gh.circle-artifacts.com/0/home/circleci/restassured-serenitybdd-junit-cucumber/target/site/serenity/index.html.
 
-The report records the API calls and its response in a very readable format as shown below.
-![Sample Report Image](https://user-images.githubusercontent.com/22020329/67158844-02705300-f35b-11e9-8147-51b1137dcec8.png)
+#### Write new tests
 
-Each step in tests are very clearly documented for readability and debugging in case of failures.
+- Make a new .feature file in the folder: resources/features
+  Define the test cases in the Given, When, Then format
+  
+  ```Gherkin
+  Scenario: test scenario
+    (Given) some context
+    (When) some action is carried out
+    (Then) a particular set of observable consequences should obtain
+  ```
+  
+- Make a new .java file in the folder: stepdefinitions
+  Define the test scenario steps from the feature file to 'glue' them with the actual code
 
-![Sample Report Steps](https://user-images.githubusercontent.com/22020329/67158871-63982680-f35b-11e9-82ae-b5e6422167d3.png)
+  @Given("^having a new pet defined with id (.*) name (.*) and status (.*)$") 
+    public void function(int id, String name, String status) {
+      code;
+    }
+
+  When using tables in the feature file, make sure using the ^ and $ in the @Given @When and @Then definitions
+  The (.*) is used as a placeholder for the variables coming from the feature file
+  Make sure to give the exact amount of variables as arguments in the function
 
 ```
