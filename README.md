@@ -30,6 +30,27 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
 
 ### Write new tests
 
+##### Testrunner
+To make the tests running a testrunner is needed. It is the starting point for Junit to start executing de tests. 
+In the project it is defined in the file: CucumberTestSuite.java
+
+```Gherkin
+import cucumber.api.CucumberOptions;
+import net.serenitybdd.cucumber.CucumberWithSerenity;
+import org.junit.runner.RunWith;
+
+@RunWith(CucumberWithSerenity.class)
+@CucumberOptions(
+    plugin = {"pretty"},
+    features = "src/test/resources/features"
+)
+public class CucumberTestSuite {
+
+}
+```
+More about test runners: https://www.toolsqa.com/cucumber/junit-test-runner-class/
+
+##### Feature files
 - Make a new .feature file in the folder: resources/features
   Define the test cases in the Given, When, Then format
   
@@ -49,7 +70,7 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
     | id   | name  | status   |
     | 100  | Vido  | available|
   ```
-
+##### Stepdefinitions
 - Make a new .java file in the folder: stepdefinitions.
   Define the test scenario steps from the feature file to 'glue' them with the actual code
 
