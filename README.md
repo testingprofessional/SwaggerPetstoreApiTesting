@@ -19,7 +19,7 @@ src
       + features                    Feature files directory
           pet.feature               Feature containing BDD scenarios
           store.feature             Feature containing BDD scenarios
-          user.feature             Feature containing BDD scenarios
+          user.feature              Feature containing BDD scenarios
       Serenity.conf                 Configurations file
 
 ```
