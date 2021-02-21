@@ -20,7 +20,6 @@ src
           pet.feature               Feature containing BDD scenarios
           store.feature             Feature containing BDD scenarios
           user.feature              Feature containing BDD scenarios
-      Serenity.conf                 Configurations file
 
 ```
 ### Install and executing the tests
