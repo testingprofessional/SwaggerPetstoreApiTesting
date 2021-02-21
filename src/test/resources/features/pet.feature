@@ -52,3 +52,7 @@ Scenario Outline: Deletes a pet
     | 100  |
     | 200  |
     | 300  |
+
+#POST/pet/{petId}/uploadImage
+#Scenario: Uploads an image
+#Uploading is not working. The pet is not updated with the image. Tried in Swagger and Postman 

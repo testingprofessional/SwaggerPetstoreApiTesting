@@ -35,7 +35,8 @@ public class PetSteps {
     public void thePetShouldBeAvailable(Pet generatedPet) {
         rest().get(Constants.PET_ENDPOINT + "/{id}", generatedPet.getId())
             .then().statusCode(200)
-            .and().body("name", equalTo(generatedPet.getName()));
+            .and().body("name", equalTo(generatedPet.getName()))
+                  .body("status", equalTo(generatedPet.getStatus()));
     }
 
     @Step

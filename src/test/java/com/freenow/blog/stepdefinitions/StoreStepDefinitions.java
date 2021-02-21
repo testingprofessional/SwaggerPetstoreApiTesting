@@ -1,5 +1,7 @@
 package com.freenow.blog.stepdefinitions;
 
+import com.freenow.blog.models.Status;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -56,9 +58,9 @@ public class StoreStepDefinitions {
     //Returns pet inventories by status
     @Given("3 pets in the petstore with status available pending and sold")
     public void makeThreePetsInThePetstore() {
-        String jsonPetAvailable = petSteps.generateJsonPet("dogInventoryAvailable", "available", 4001);
-        String jsonPetPending = petSteps.generateJsonPet("dogInventoryPending", "pending", 5001);
-        String jsonPetSold = petSteps.generateJsonPet("dogInventorySold", "sold", 6001);
+        String jsonPetAvailable = petSteps.generateJsonPet("dogInventoryAvailable", Status.available.value, 5001);
+        String jsonPetPending = petSteps.generateJsonPet("dogInventoryPending", Status.pending.value, 5002);
+        String jsonPetSold = petSteps.generateJsonPet("dogInventorySold", Status.sold.value, 5003);
         petSteps.addPetToPetStore(jsonPetAvailable);
         petSteps.addPetToPetStore(jsonPetPending);
         petSteps.addPetToPetStore(jsonPetSold);
@@ -67,8 +69,9 @@ public class StoreStepDefinitions {
     @When("asking the inventory of the petstore i expect a map with quantities")
     public void getPetInventoriesByStatus() {
         storeSteps.theInventoryShouldBeAvailable();
-        petSteps.deleteThePet(4001);
-        petSteps.deleteThePet(5001);
-        petSteps.deleteThePet(6001);
+
+        for (int i=1; i<4; i++) {
+            petSteps.deleteThePet(5000 + i);
+        }
     } 
 }

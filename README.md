@@ -31,7 +31,7 @@ The test results will be recorded in folder: `target/site/serenity/index.html`.
 ### Write new tests
 
 ##### Testrunner
-To make the tests running a testrunner is needed. It is the starting point for Junit to start executing de tests. 
+To make the tests running, a testrunner is needed. It is the starting point for Junit to start executing de tests. 
 In the project it is defined in the file: CucumberTestSuite.java
 
 ```Gherkin
