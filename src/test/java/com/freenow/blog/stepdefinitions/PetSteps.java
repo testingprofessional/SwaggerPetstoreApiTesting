@@ -22,13 +22,15 @@ public class PetSteps {
     @Step
     public void addPetToPetStore(String jsonPet) {
         rest().given().contentType("application/json")
-            .body(jsonPet).post(Constants.PET_ENDPOINT);
+            .body(jsonPet).post(Constants.PET_ENDPOINT)
+            .then().statusCode(200);
     }
 
     @Step
     public void updateThePetInThePetStore(String jsonPet) {
         rest().given().contentType("application/json")
-            .body(jsonPet).put(Constants.PET_ENDPOINT);
+            .body(jsonPet).put(Constants.PET_ENDPOINT)
+            .then().statusCode(200);
     }
 
     @Step

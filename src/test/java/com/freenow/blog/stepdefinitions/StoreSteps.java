@@ -21,7 +21,8 @@ public class StoreSteps {
     @Step
     public void addOrderToPetStore(String jsonOrder) {
         rest().given().contentType("application/json")
-            .body(jsonOrder).post(Constants.STORE_ENDPOINT + "/order");
+            .body(jsonOrder).post(Constants.STORE_ENDPOINT + "/order")
+            .then().statusCode(200);
     }
 
     @Step

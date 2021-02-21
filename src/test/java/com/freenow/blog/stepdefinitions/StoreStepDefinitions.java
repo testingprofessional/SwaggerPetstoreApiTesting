@@ -26,7 +26,7 @@ public class StoreStepDefinitions {
         jsonOrder = storeSteps.generateOrder(orderId, petId, quantity);
     }
 
-    @When("I place the order")
+    @When("placing the order")
     public void placeOrderForPet() {
         storeSteps.addOrderToPetStore(jsonOrder);
     } 
@@ -38,7 +38,7 @@ public class StoreStepDefinitions {
     }
 
     //Delete purchase order by ID
-    @When("^I delete a purchase order with id (.*)")
+    @When("^deleting a purchase order with id (.*)")
     public void deletePurchaseOrder(int id) {
         purchaseId = id;
         storeSteps.deleteTheOrder(purchaseId);

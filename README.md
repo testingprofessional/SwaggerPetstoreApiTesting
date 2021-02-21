@@ -18,7 +18,8 @@ src
     + resources
       + features                    Feature files directory
           pet.feature               Feature containing BDD scenarios
-          order.feature             Feature containing BDD scenarios
+          store.feature             Feature containing BDD scenarios
+          user.feature             Feature containing BDD scenarios
       Serenity.conf                 Configurations file
 
 ```
@@ -92,11 +93,8 @@ More about test runners: https://www.toolsqa.com/cucumber/junit-test-runner-clas
 Swagger overview of endpoints: https://petstore.swagger.io/
 
 Endpoints:
-Test automation made:
 - Everything about pets: https://petstore.swagger.io/v2/pet
 - Access to Petstore orders: https://petstore.swagger.io/v2/store
-
-Test automation not made:
 - Operations about user: https://petstore.swagger.io/v2/user
 
 For a more detailed overview please visit the swagger overview or take a look at the Cucumber feature files in this project
