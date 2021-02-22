@@ -14,6 +14,22 @@ import static net.serenitybdd.rest.SerenityRest.rest;
 public class UserSteps {
 
     @Step
+    public void userLogin(String username, String password) {
+        rest().queryParam("username", username)
+            .queryParam("password", password)
+            .get(Constants.USER_ENDPOINT + "/login")
+            .then().statusCode(200)
+            .and().body("message", containsString("logged in user session"));
+    }
+
+    @Step
+    public void userLogout() {
+        rest().get(Constants.USER_ENDPOINT + "/logout")
+            .then().statusCode(200)
+            .and().body("message", equalTo("ok"));
+    }
+
+    @Step
     public String generateUser(int id, String username, String firstname, String lastname, String email, String password, String phone, int userStatus) {
         return "{\"id\": " + id + 
                 " , \"username\": \"" + username + 

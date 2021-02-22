@@ -1,5 +1,12 @@
 Feature: Operations about user
 
+#GET/user/login
+Scenario Outline: logs user into the system
+    When loging in with username <user> and password <password> im logged in into the system
+    Examples:
+    | username | password |
+    | test     | test     |
+
 #POST/user
 #GET/user/{username}
 Scenario Outline: Create user
@@ -23,15 +30,13 @@ Scenario: Delete user
     When deleting the user testname
     Then the user is not longer in the store
 
+#GET/user/logout
+Scenario: Logs out current logged in user session
+    When the user logs out then the user is logged out
+
 #TODO
 #POST/user/createWithArray
 #Scenario: Create list of users with given input array
 
 #POST/user/createWithList
 #Scenario: Creates list of users with given input array
-
-#GET/user/login
-#Scenario: Logs user into the system
-
-#GET/user/logout
-#Scenario: Logs out current logged in user session

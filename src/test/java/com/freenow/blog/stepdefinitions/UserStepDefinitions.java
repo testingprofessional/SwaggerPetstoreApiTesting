@@ -18,6 +18,18 @@ public class UserStepDefinitions {
     String jsonUser;
     String usernameDeleted;
 
+    //logs user into the system
+    @When("^loging in with username (.*) and password (.*) im logged in into the system$")
+    public void userLogin(String username, String password) {
+        userSteps.userLogin(username, password);
+    }
+
+    //Logs out current logged in user session
+    @When("the user logs out then the user is logged out") 
+    public void userLogout() {
+        userSteps.userLogout();
+    }
+
     //Create user
     @Given("^an user with name (.*)$")
     public void anUserWithAName(String username) {
