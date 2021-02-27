@@ -103,7 +103,7 @@ For a more detailed overview please visit the swagger overview or take a look at
 All tests will be running automaticly when pushing the changed functionality to GitLab (repo).
 How to do this:
 
-1) Make a GitLab account and started a new project https://gitlab.com/vndale/leaseplanopdrachtbe.git
+1) Make a GitLab account and started a new project 
 2) Make a SSH key and put it in the Gitlab Project settings https://docs.gitlab.com/ee/ssh/
 3) Install a Gitlab Runner to run jobs in the pipeline: 
       Info about Gitlab runners: https://docs.gitlab.com/runner/
@@ -116,7 +116,7 @@ demo_job_1:
      tags:
        - ci
      script:
-       - echo Hello Leaseplan
+       - echo Hello CI
        - mvn clean verify
 ```
 5) To bring changes to the Gitlab repo:
